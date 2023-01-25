@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block head %}
+WikiTable Scraper
+{% endblock %}
+
+{% block body %}
+
+{% block content %}
+<form align="center" method="POST">
+    <br>
+    <div class="input-group">
+        <div class="col-sm-6">
+            <input 
+             type="url"
+             class="form-control form-control-md"
+             id="wikiURL"
+             name="wikiURL"
+             placeholder="https://en.wikipedia.org/wiki/Example_Page"
+            />
+        </div>
+        <div class="input-group-btn">
+            <button type="submit" class="btn btn-outline-primary">Scrap</button>
+        </div>
+        
+
+    </div>
+
+</form>
+
+{% endblock %}
+{% endblock %}
