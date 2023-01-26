@@ -14,19 +14,27 @@ WikiTable Scraper
             <input 
              type="url"
              class="form-control form-control-md"
-             id="wikiURL"
-             name="wikiURL"
+             id="url"
+             name="url"
              placeholder="https://en.wikipedia.org/wiki/Example_Page"
             />
         </div>
         <div class="input-group-btn">
             <button type="submit" class="btn btn-outline-primary">Scrap</button>
         </div>
-        
-
     </div>
-
 </form>
 
+{% if request.method == 'POST' %}
+<div class="content">
+    <br>
+    <h2>Scraped {{ tablesAmount }} tables in {{ pageTitle }} </h2>
+
+{% for table in tables %}
+    {{ tablesTitles[loop.index] }}
+    {{ table|safe }}
+{% endfor %}    
+
+{% endif %}
 {% endblock %}
 {% endblock %}

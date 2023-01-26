@@ -2,6 +2,7 @@ from flask import Flask
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
+import numpy as np
 
 def create_app():
     app = Flask(__name__)
@@ -10,6 +11,13 @@ def create_app():
     app.register_blueprint(views, url_prefix='/')
 
     return app
+
+def clean(title):
+    title = title.replace(' ', '_').replace('(','').replace(')','')
+    if '[' in title:
+        return title[:title.index('[')]
+    else:
+        return title
 
 def get_tables(url):
     
@@ -34,5 +42,5 @@ def get_tables(url):
         raw_df = pd.read_html(str(table))
         df = pd.DataFrame(raw_df[0]).replace(r'^\s*$', np.nan, regex=True).dropna(how='all', axis=1)
         df_tables.append(df)
-        
+
     return {'tables':df_tables, 'titles':df_titles, 'site':s_title, 'n_tables':n_tables}
