@@ -9,9 +9,10 @@ WikiTable Scraper
 {% block content %}
 <form align="center" method="POST">
     <br>
-    <div class="input-group">
-        <div class="col-sm-6">
+    <div align="center" class="input-group">
+        <div align="center" class="col-sm-6">
             <input 
+             align="center"
              type="url"
              class="form-control form-control-md"
              id="url"
@@ -25,16 +26,45 @@ WikiTable Scraper
     </div>
 </form>
 
-{% if request.method == 'POST' %}
-<div class="content">
-    <br>
-    <h2>Scraped {{ tablesAmount }} tables in {{ pageTitle }} </h2>
+    {% if request.method == 'POST' %}
+    <div class="content">
+        <br>
+        <h2 align="center">Scraped {{ tablesAmount }} tables from {{ pageTitle }} </h2>
 
-{% for table in tables %}
-    {{ tablesTitles[loop.index] }}
-    {{ table|safe }}
-{% endfor %}    
+
+    <div class="table">
+        <form method="POST">
+            <table>
+                {% for table in tables %}
+                {% if loop.index0 % 3 == 0 %}
+                    <tr>
+                {% endif %}
+                    <td>
+                        <div class="col-sm-12">
+                            <button
+                            type="submit"
+                            class="btn btn-outline-primary btn-block"
+                            data-bs-toggle="button"
+                            id="tableID"
+                            name="tableID"
+                            value="{{ loop.index0 }}"
+                            >
+                            {{ tablesTitles[loop.index0] }}
+                            </button>
+                        </div>
+                    </td>
+
+                {% endfor %}
+            </table>
+        </form>
+    </div>
+
+    <br>
+
+    {{ tableView|safe }}
+
 
 {% endif %}
-{% endblock %}
+{% endblock%}
+
 {% endblock %}
