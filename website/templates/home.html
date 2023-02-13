@@ -7,31 +7,43 @@ WikiTable Scraper
 {% block body %}
 
 {% block content %}
-<form align="center" method="POST">
+<form  method="POST">
     <br>
-    <div align="center" class="input-group">
-        <div align="center" class="col-sm-6">
+    <div class="input-group mb-3">
+
             <input 
-             align="center"
              type="url"
              class="form-control form-control-md"
+             style="max-width: 600px;"
              id="url"
              name="url"
              placeholder="https://en.wikipedia.org/wiki/Example_Page"
             />
-        </div>
-        <div class="input-group-btn">
-            <button type="submit" class="btn btn-outline-primary">Scrap</button>
-        </div>
+        
+            <button type="submit" class="btn btn-primary">Scrap</button>
+
     </div>
 </form>
 
     {% if request.method == 'POST' %}
+    {% if isWiki == True %}
     <div class="content">
         <br>
         <h2 align="center">Scraped {{ tablesAmount }} tables from {{ pageTitle }} </h2>
 
+        <form action="/" method="POST" class="form-inline">
+            <label for="downloadFormat" class="mr-sm-2">Download format:</label>
+            <select class="form-control mr-sm-2" name="downloadFormat" id="downloadFormat">
+              <option value="csv">CSV</option>
+              <option value="json">JSON</option>
+              <option value="xlsx">XLSX</option>
+            </select>
+            <button type="submit" class="btn btn-primary">Download</button>
+          </form>
 
+        <form method="POST">
+            <input type="submit" name="saveTable" value="Save" class="btn btn-primary">
+        </form>
     <div class="table">
         <form method="POST">
             <table>
@@ -60,10 +72,11 @@ WikiTable Scraper
     </div>
 
     <br>
+<div align="center">
+{{ tableView|safe }}
+</div>
 
-    {{ tableView|safe }}
-
-
+{% endif %}
 {% endif %}
 {% endblock%}
 

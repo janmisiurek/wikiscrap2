@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+  <h1 class="text-center">Sing Up</h1>
+  <div class="row justify-content-center mt-5">
+    <div class="col-md-6">
+      <form method="post">
+        <div class="form-group">
+          <label for="username">User Name</label>
+          <input type="text" class="form-control" id="username", name="username" aria-describedby="usernameHelp" placeholder="Enter User Name">
+        </div>
+        <div class="form-group">
+          <label for="email">Email <Address></Address></label>
+          <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter Email">
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password">
+        </div>
+        <div class="form-group">
+          <label for="password_confirm">Password (confirm)</label>
+          <input type="password" class="form-control" id="password_confirm" name="password_confirm" placeholder="Confirm Password">
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
