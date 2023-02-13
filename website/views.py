@@ -12,74 +12,65 @@ views = Blueprint('views', __name__)
 def home():
 
     if request.method == 'POST':
-                
+        from . import get_tables
+        
         url = request.form.get('url')
         if url is not None:
 
-            if 'wikipedia.org' in url:
-                global pageTables 
-                pageTables = get_tables(url)
-                global tablesAmount
-                tablesAmount = pageTables['n_tables']
-                global pageTitle
-                pageTitle = pageTables['site']
-                global tables
-                tables = pageTables['tables']
-                global tablesTitles
-                tablesTitles = pageTables['titles']
-                global tablesHTML
-                tablesHTML = []
-                global tableView
-                tableView = ''
-                global isWiki
-                isWiki = True
-                for table in tables:
-                    tablesHTML.append(table.to_html())
+            global pageTables 
+            pageTables = get_tables(url)
+            global tablesAmount
+            tablesAmount = pageTables['n_tables']
+            global pageTitle
+            pageTitle = pageTables['site']
+            global tables
+            tables = pageTables['tables']
+            global tablesTitles
+            tablesTitles = pageTables['titles']
+            global tablesHTML
+            tablesHTML = []
+            global tableView
+            tableView = ''
             
-            
-                global tableID
-                tableID = request.form.get('tableID')
-                if tableID is not None:
-                    tableView = tablesHTML[int(tableID)]
-                    global df
-                    df = tables[int(tableID)]
-                    global name
-                    name = tablesTitles[int(tableID)]
-                    global data
-                    data = df.to_json()
-                else:
-                    tableView =''
+            for table in tables:
+                tablesHTML.append(table.to_html())
 
-                downloadFormat = request.form.get('downloadFormat')
-                if downloadFormat is not None:
-                    return send_table(df, downloadFormat)
-
-                saveTable = request.form.get('saveTable')
-                if saveTable is not None:
-                    new_table = Table(name=name, data=data, user_id=current_user.id)
-                    db.session.add(new_table)
-                    db.session.commit()
-                    flash('Table saved successfully', category='success')
-                    
-                return render_template(
-                    "home.html",
-                    tablesAmount = tablesAmount,
-                    pageTitle = pageTitle,
-                    tables = tablesHTML,
-                    tablesTitles = tablesTitles,
-                    tableView = tableView,
-                    user = current_user,
-                    isWiki = isWiki
-                )
-            else:
-                isWiki = False
-                return render_template("home.html", user=current_user)
-                
+        global tableID
+        tableID = request.form.get('tableID')
+        if tableID is not None:
+            tableView = tablesHTML[int(tableID)]
+            global df
+            df = tables[int(tableID)]
+            global name
+            name = tablesTitles[int(tableID)]
+            global data
+            data = df.to_json()
         else:
-            return render_template("home.html", user=current_user)
-            
+            tableView =''
+
+        downloadFormat = request.form.get('downloadFormat')
+        if downloadFormat is not None:
+                return send_table(df, downloadFormat)
+
+        saveTable = request.form.get('saveTable')
+        if saveTable is not None:
+            new_table = Table(name=name, data=data, user_id=current_user.id)
+            db.session.add(new_table)
+            db.session.commit()
+            flash('Table saved successfully', category='success')
+                    
+        return render_template(
+                "home.html",
+                tablesAmount = tablesAmount,
+                pageTitle = pageTitle,
+                tables = tablesHTML,
+                tablesTitles = tablesTitles,
+                tableView = tableView,
+                user = current_user
+                )
+
     else:
-        return render_template("home.html", user=current_user)
+        return render_template("home.html", user=current_user, isWiki=False)
 
 
 

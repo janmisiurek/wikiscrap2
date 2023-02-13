@@ -51,7 +51,7 @@ def clean(title):
 def get_tables(url):
     
     site = requests.get(url)
-    bf_site = BeautifulSoup(site.text, "html")
+    bf_site = BeautifulSoup(site.text, features="lxml")
     tables = []
     tables = bf_site.find_all('table', class_='wikitable')
     s_title = bf_site.find('span', class_='mw-page-title-main').text
