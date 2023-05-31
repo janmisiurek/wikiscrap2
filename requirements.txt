@@ -1,0 +1,13 @@
+accelerate==0.19.0
+beautifulsoup4==4.11.1
+Flask==2.2.3
+Flask-Bootstrap==3.3.7.1
+Flask-Compress==1.13
+Flask-Login==0.6.2
+Flask-SQLAlchemy==3.0.2
+Flask-WTF==1.1.1
+numpy==1.24.1
+OS
+pandas==1.5.3
+requests==2.28.2
+SQLAlchemy==2.0.9
